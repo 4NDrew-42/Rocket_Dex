@@ -24,7 +24,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.3); /* Increased dimming strength */
+    background-color: rgba(0, 0, 0, 0.3);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
@@ -43,13 +43,11 @@ body {
     animation: flash 1s infinite;
     animation-delay: 1s;
     transform-origin: left top;
-    
 }
 
 #pokedex-icon:hover {
     cursor: pointer;
     transform: scale(1.1);
-    /* Trigger the dimming effect on the parent's pseudo-element */
 }
 
 .background-image:hover::before {
@@ -65,9 +63,47 @@ body {
     }
 }
 
-#pokedex-icon.clicked {
-    transform: scale(6.1) translate(calc(50% - 34.5px), calc(50% - 60px)); /* Corrects the translate value to ensure smooth scaling and transition to the center */
-    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
-    animation: none; /* stop the flash animation */
+/* ... (previous CSS remains unchanged) ... */
+
+#scaling-solid {
+    position: absolute;
+    background-color: #FFE600;
+    width: 60px;
+    height: 30px;
+    top: 450px;
+    left: 24px;  /* Adjusted from 24px to 8px */
+    border-radius: 30px 30px 0 0;
+    transform-origin: center bottom;
+    z-index: 0;
+    transition: transform 0.4s ease-out, transform-origin 0.8s ease-out;
 }
 
+@keyframes scaleAnimation {
+    0%, 40% {
+        transform: scaleX(6) scaleY(1);
+        border-radius: 0;
+        transform-origin: left top;
+        top: 440px;
+        left: 0px;
+    }
+    
+    100% {
+        transform-origin: left top;
+        transform: scaleX(6) scaleY(27);
+        border-radius: 0;
+        top: 0px; /* Adjusted to move it up */
+        left: 0px; /* Adjusted to move it to the left */
+    }
+}
+
+#scaling-solid.clicked {
+    animation: scaleAnimation .8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    background-color: #FFE600;
+    border-radius: 0px;
+}
+
+#pokedex-icon.clicked {
+    transform: scale(6.12) translate(calc(50% - 34.5px), calc(50% - 60px));
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: none;
+}
