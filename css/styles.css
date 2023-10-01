@@ -14,47 +14,47 @@ body {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    transition: width 0.3s ease, height 0.3s ease;
     position: relative;
-}
-
-.background-image:hover {
-    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .background-image::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0);
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Increased dimming strength */
+    opacity: 0;
     pointer-events: none;
-    transition: background-color 0.3s ease;
+    transition: opacity 0.3s ease-in-out;
 }
 
 #pokedex-icon {
-    width: 16%;
-    height: 16%;
+    width: 60px;
+    height: 60px;
     display: block;
     position: absolute;
-    top: 52%;
-    left: 7%;
+    top: 450px;
+    left: 24px;
+    transition: transform 0.8s ease-out, opacity 0.3s ease-in-out;
+    z-index: 1;
+    filter: brightness(1);
     animation: flash 1s infinite;
-    transform: scale(1);
-    transition: transform 0.3s ease;
+    animation-delay: 1s;
+    transform-origin: left top;
+    
 }
 
 #pokedex-icon:hover {
     cursor: pointer;
-    transform: scale(6.30) translate(35%, -15%);
+    transform: scale(1.1);
+    /* Trigger the dimming effect on the parent's pseudo-element */
 }
 
-
-/*#pokedex-icon.clicked {
-    transform: scale(6.05) translate(34.5%, -15%);
-}*/
+.background-image:hover::before {
+    opacity: 1;
+}
 
 @keyframes flash {
     0%, 100% {
@@ -64,3 +64,10 @@ body {
         filter: brightness(1.1);
     }
 }
+
+#pokedex-icon.clicked {
+    transform: scale(6.1) translate(calc(50% - 34.5px), calc(50% - 60px)); /* Corrects the translate value to ensure smooth scaling and transition to the center */
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: none; /* stop the flash animation */
+}
+
